@@ -4,19 +4,17 @@ import datetime
 
 from singer_sdk.testing import get_tap_test_class
 
-from tap_edgar.tap import Taptap_edgar
+from tap_edgar.tap import TapEdgar
 
 SAMPLE_CONFIG = {
-    "start_date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d"),
-    # TODO: Initialize minimal tap config
+    "companies": [
+        {"cik": "0000066740"},
+    ]
 }
 
 
 # Run standard built-in tap tests from the SDK:
-TestTaptap_edgar = get_tap_test_class(
-    tap_class=Taptap_edgar,
+TestTapEdgar = get_tap_test_class(
+    tap_class=TapEdgar,
     config=SAMPLE_CONFIG,
 )
-
-
-# TODO: Create additional tests as appropriate for your tap.

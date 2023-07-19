@@ -18,7 +18,7 @@ class TapEdgar(Tap):
         th.Property(
             "companies",
             th.ArrayType(
-                th.ObjectType(th.Property("cik", th.NumberType, required=True))
+                th.ObjectType(th.Property("cik", th.StringType, required=True))
             ),
         )
     ).to_dict()

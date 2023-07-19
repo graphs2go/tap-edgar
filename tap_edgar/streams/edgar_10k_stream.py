@@ -4,26 +4,21 @@ from singer_sdk import Tap
 
 from tap_edgar.streams.tap_edgar_stream import TapEdgarStream
 
-from singer_sdk.typing import (
-    NumberType,
-    PropertiesList,
-    Property,
-    StringType,
-    ObjectType,
-)
+import singer_sdk.typing as th
 
 
 class Edgar10kStream(TapEdgarStream):
-    schema = PropertiesList(
-        Property("cik", NumberType),
-        Property(
+    name = "edgar-10k"
+    schema = th.PropertiesList(
+        th.Property("cik", th.StringType),
+        th.Property(
             "company",
-            ObjectType(
-                Property("cik", NumberType),
-                Property("confirmed_name", StringType),
+            th.ObjectType(
+                th.Property("cik", th.StringType),
+                th.Property("confirmed_name", th.StringType),
             ),
         ),
-    )
+    ).to_dict()
     identifier = ["cik"]
 
     def __init__(self, tap: Tap):
