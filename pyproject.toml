@@ -10,13 +10,15 @@ packages = [{include = "tap_edgar"}]
 python = "~3.11"
 singer-sdk = "^0.30.0"
 requests = "^2.31.0"
+requests-ratelimiter = "^0.4.0"
+beautifulsoup4 = "^4.12.2"
+requests-cache = "^1.1.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.7.0"
 flake8 = "^6.0.0"
 meltano = "^2.20.0"
 mypy = "^1.4.1"
-cookiecutter = "^2.2.3"
 pytest = "^7.2.1"
 singer-sdk = { version="^0.30.0", extras = ["testing"] }
 

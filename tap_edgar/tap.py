@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import date
 from typing import List
 
 from singer_sdk import Tap
@@ -18,7 +19,11 @@ class TapEdgar(Tap):
         th.Property(
             "companies",
             th.ArrayType(
-                th.ObjectType(th.Property("cik", th.StringType, required=True))
+                th.ObjectType(
+                    th.Property("cik", th.StringType, required=True),
+                    th.Property("dateb", th.DateType, default="2022-01-01"),
+                    th.Property("count", th.NumberType, default=25),
+                )
             ),
         )
     ).to_dict()
