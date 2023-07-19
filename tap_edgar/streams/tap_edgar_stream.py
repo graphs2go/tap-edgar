@@ -20,15 +20,8 @@ class _CachedLimiterSession(CacheMixin, LimiterMixin, Session):
 
 
 class TapEdgarStream(Stream, ABC):
+    filing_properties: Tuple[th.Property, ...]
     filing_type: str
-    schema = th.PropertiesList(
-        th.Property("cik", th.StringType),
-        th.Property(
-            "company",
-            th.ObjectType(th.Property("cik", th.StringType)),
-        ),
-        th.Property("filing", th.ObjectType(th.Property("type", th.StringType))),
-    ).to_dict()
     identifier = ["cik"]
 
     @dataclass(frozen=True)
@@ -47,7 +40,32 @@ class TapEdgarStream(Stream, ABC):
         filings: Tuple[Filing, ...]
 
     def __init__(self, tap: Tap):
-        super().__init__(tap=tap, name=None, schema=None)
+        super().__init__(
+            tap=tap,
+            name=None,
+            schema=th.PropertiesList(
+                th.Property("cik", th.StringType),
+                th.Property(
+                    "company",
+                    th.ObjectType(
+                        th.Property("cik", th.StringType),
+                        th.Property("confirmed_name", th.StringType),
+                    ),
+                ),
+                th.Property(
+                    "filing",
+                    th.ObjectType(
+                        *(
+                            [
+                                th.Property("accession_number", th.StringType),
+                                th.Property("type", th.StringType),
+                            ]
+                            + list(self.filing_properties)
+                        )
+                    ),
+                ),
+            ).to_dict(),
+        )
         self.__requests_session = _CachedLimiterSession(
             ".http_cache", backend="filesystem", per_second=10
         )
@@ -111,7 +129,7 @@ class TapEdgarStream(Stream, ABC):
                 "company": dataclasses.asdict(company_rss.company_info),
                 "filing": dataclasses.asdict(filing),
             }
-            record.update(
+            record["filing"].update(
                 self._parse_filing_html(
                     filing_html=self.__get_filing_html(
                         accession_number=filing.accession_number,

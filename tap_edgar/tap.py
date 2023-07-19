@@ -21,8 +21,6 @@ class TapEdgar(Tap):
             th.ArrayType(
                 th.ObjectType(
                     th.Property("cik", th.StringType, required=True),
-                    th.Property("dateb", th.DateType, default="2022-01-01"),
-                    th.Property("count", th.NumberType, default=25),
                 )
             ),
         )
