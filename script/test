@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+poetry run black --check tap_edgar
+poetry run flake8 tap_edgar
+poetry run mypy tap_edgar

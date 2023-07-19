@@ -1,3 +1,2 @@
-/venv
 /.meltano
-.env
+/.venv
