@@ -5,3 +5,18 @@ environments:
 - name: dev
 - name: staging
 - name: prod
+plugins:
+  extractors:
+  - name: tap-edgar
+    namespace: tap_edgar
+    pip_url: .
+    settings:
+    - name: companies
+      kind: array
+    config:
+      companies:
+      - cik: 0000066740      # MMM
+  loaders:
+  - name: target-jsonl
+    config:
+      do_timestamp_file: true
