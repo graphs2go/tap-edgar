@@ -16,6 +16,7 @@ black = "^23.7.0"
 flake8 = "^6.0.0"
 meltano = "^2.20.0"
 mypy = "^1.4.1"
+cookiecutter = "^2.2.3"
 
 [build-system]
 requires = ["poetry-core"]
