@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "tap-edgar"
+version = "0.1.0"
+description = ""
+authors = ["Minor Gordon <minorg@server.fake>"]
+readme = "README.md"
+packages = [{include = "tap_edgar"}]
+
+[tool.poetry.dependencies]
+python = "~3.11"
+meltano = "^2.20.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
