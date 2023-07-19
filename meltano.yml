@@ -1,6 +1,6 @@
 version: 1
 default_environment: dev
-project_id: 24387360-7276-433e-afb1-7939d3626da8
+project_id: tap-edgar
 environments:
 - name: dev
 - name: staging
@@ -9,7 +9,13 @@ plugins:
   extractors:
   - name: tap-edgar
     namespace: tap_edgar
-    pip_url: .
+    pip_url: -e .
+    capabilities:
+      - state
+      - catalog
+      - discover
+      - about
+      - stream-maps
     settings:
     - name: companies
       kind: array
