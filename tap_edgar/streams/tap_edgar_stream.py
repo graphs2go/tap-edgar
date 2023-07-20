@@ -3,13 +3,12 @@ import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Iterable, List, Tuple, Dict, Any
-import xml.etree.ElementTree as ET
 
 import requests
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup
 from requests import Session, HTTPError
 from requests_cache import CacheMixin
-from requests_ratelimiter import LimiterSession, LimiterMixin
+from requests_ratelimiter import LimiterMixin
 from singer_sdk import Stream, Tap
 import singer_sdk.typing as th
 
