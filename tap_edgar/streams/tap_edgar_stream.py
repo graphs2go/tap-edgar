@@ -1,4 +1,5 @@
 import dataclasses
+import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Iterable, List, Tuple, Dict, Any
@@ -6,7 +7,7 @@ import xml.etree.ElementTree as ET
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from requests import Session
+from requests import Session, HTTPError
 from requests_cache import CacheMixin
 from requests_ratelimiter import LimiterSession, LimiterMixin
 from singer_sdk import Stream, Tap
@@ -66,6 +67,7 @@ class TapEdgarStream(Stream, ABC):
                 ),
             ).to_dict(),
         )
+        self.__logger = logging.getLogger(__name__)
         self.__requests_session = _CachedLimiterSession(
             ".http_cache", backend="filesystem", per_second=10
         )
@@ -123,20 +125,33 @@ class TapEdgarStream(Stream, ABC):
         return html_response.text
 
     def get_records(self, company_config: dict) -> Iterable[dict]:
-        company_rss = self.__get_company_rss(company_cik=company_config["cik"])
+        try:
+            company_rss = self.__get_company_rss(company_cik=company_config["cik"])
+        except HTTPError:
+            self.__logger.warning(
+                "error getting company %s RSS:", company_config, exc_info=True
+            )
+            return
+
         for filing in company_rss.filings:
+            try:
+                filing_html = self.__get_filing_html(
+                    accession_number=filing.accession_number,
+                    company_cik=company_config["cik"],
+                )
+            except HTTPError:
+                self.__logger.warning(
+                    "error getting company %s filing HTML:",
+                    company_config,
+                    exc_info=True,
+                )
+                continue
+
             record = {
                 "company": dataclasses.asdict(company_rss.company_info),
                 "filing": dataclasses.asdict(filing),
             }
-            record["filing"].update(
-                self._parse_filing_html(
-                    filing_html=self.__get_filing_html(
-                        accession_number=filing.accession_number,
-                        company_cik=company_config["cik"],
-                    )
-                )
-            )
+            record["filing"].update(self._parse_filing_html(filing_html=filing_html))
             yield record
 
     @abstractmethod
