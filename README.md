@@ -9,3 +9,7 @@ Singer tap for SEC EDGAR filings.
 ## Run tests
     
     script/test
+
+## Extract S&P 500 data 
+
+    poetry run tap-edgar --config config/sp500.config.json >output/sp500.output.jsonl
