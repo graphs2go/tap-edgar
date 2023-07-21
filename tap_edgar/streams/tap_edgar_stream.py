@@ -115,7 +115,9 @@ class TapEdgarStream(Stream, ABC):
         meta_links_json = meta_links_json_response.json()
         meta_links_instance = meta_links_json["instance"]
         assert len(meta_links_instance) == 1
-        html_file_name = tuple(meta_links_json["instance"].keys())[0]
+        html_file_name = tuple(meta_links_json["instance"].keys())[0].split()[
+            0
+        ]  # Take the first file name
 
         html_response: requests.Response = self.__requests_session.get(
             base_url + html_file_name, headers=self.__request_headers

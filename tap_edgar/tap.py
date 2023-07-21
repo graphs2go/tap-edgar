@@ -21,6 +21,7 @@ class TapEdgar(Tap):
             th.ArrayType(
                 th.ObjectType(
                     th.Property("cik", th.StringType, required=True),
+                    th.Property("comment", th.StringType),
                 )
             ),
         )

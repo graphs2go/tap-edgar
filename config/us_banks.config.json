@@ -1,0 +1,60 @@
+{
+  "companies": [
+    {
+      "cik": "0000019617",
+      "comment": "JPMORGAN CHASE & CO"
+    },
+    {
+      "cik": "70858",
+      "comment": "BANK OF AMERICA CORP /DE/"
+    },
+    {
+      "cik": "0000831001",
+      "comment": "CITIGROUP INC"
+    },
+    {
+      "cik": "0000072971",
+      "comment": "WELLS FARGO & COMPANY/MN"
+    },
+    {
+      "cik": "886982",
+      "comment": "GOLDMAN SACHS GROUP INC"
+    },
+    {
+      "cik": "0000895421",
+      "comment": "Morgan Stanley"
+    },
+    {
+      "cik": "36104",
+      "comment": "US BANCORP /DE/"
+    },
+    {
+      "cik": "92230",
+      "comment": "TRUIST FINANCIAL CORP"
+    },
+    {
+      "cik": "0000713676",
+      "comment": "PNC FINANCIAL SERVICES GROUP, INC."
+    },
+    {
+      "cik": "1390777",
+      "comment": "Bank of New York Mellon Corp"
+    },
+    {
+      "cik": "0000927628",
+      "comment": "CAPITAL ONE FINANCIAL CORP"
+    },
+    {
+      "cik": "1082472",
+      "comment": "TD BANK NA"
+    },
+    {
+      "cik": "1141391",
+      "comment": "Mastercard Inc"
+    },
+    {
+      "cik": "316709",
+      "comment": "SCHWAB CHARLES CORP"
+    }
+  ]
+}
